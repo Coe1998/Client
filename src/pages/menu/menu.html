@@ -10,13 +10,6 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding>
-  <ion-item>
-    <ion-label>CATEGORIA</ion-label>
-    <ion-select>
-      <ion-option value="f" selected>Bibite</ion-option>
-      <ion-option value="m">Panini</ion-option>
-    </ion-select>
-  </ion-item>
   <ion-grid>
     <ion-row>
       <ion-col col-6 *ngFor="let item of prodotti">
@@ -63,4 +56,11 @@
         -->
     </ion-row>
   </ion-grid>
+  <ion-item class="bottom-category-bar">
+      <ion-label>CATEGORIA</ion-label>
+      <ion-select>
+        <ion-option value="f" selected>Bibite</ion-option>
+        <ion-option value="m">Panini</ion-option>
+      </ion-select>
+    </ion-item>
 </ion-content>
