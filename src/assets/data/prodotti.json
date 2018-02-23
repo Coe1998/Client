@@ -1,0 +1,63 @@
+{
+    "status" : 1,
+    "data" : [
+        {
+            "Codice" : 1,
+            "Descrizione" : "Estathe Pesca",
+            "Categoria" : "Bibite",
+            "img" : "http://www.asiantradesrl.info/304-large_default/estathe-pesca-in-lattina-24330ml.jpg",
+            "opzioni" : [ 
+                "ghiaccio",
+                "limone"
+            ] 
+        },
+        {
+            "Codice" : 2,
+            "Descrizione" : "Estathe Limone",
+            "Categoria" : "Bibite",
+            "img" : "https://buonitaly.it/18371-large_default/1000032715-estathe-limone-24-lattine-da-33-cl.jpg",
+            "opzioni" : [ 
+                "ghiaccio",
+                "limone"
+            ] 
+        },
+        {
+            "Codice" : 4,
+            "Descrizione" : "Coca Cola \n Spina media",
+            "Categoria" : "Bibite",
+            "img" : "http://www.lamiapatria.it/WP/wp-content/uploads/2015/10/coca-cola-media.jpg",
+            "opzioni" : [ 
+                "ghiaccio",
+                "limone"
+            ] 
+        },
+        {
+            "Codice" : 6,
+            "Descrizione" : "Mojito",
+            "Categoria" : "Long Drinks",
+            "img" : "http://www.recipesart.co.uk/xml_gal/123/big/mojito.jpg",
+            "opzioni" : []
+        },
+        {
+            "Codice" : 7,
+            "Descrizione" : "Cuba Libre",
+            "Categoria" : "Long Drinks",
+            "img" : "https://images.eatsmarter.com/sites/default/files/styles/max_size/public/cuba-libre-with-mint-626296.jpg",
+            "opzioni" : []
+        },
+        {
+            "Codice" : 8,
+            "Descrizione" : "Arneis \n Vino bianco",
+            "Categoria" : "Vini",
+            "img" : "http://www.shoppingdrink.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/c/a/calice_vino_bianco1200x1200.jpg",
+            "opzioni" : []
+        },
+        {
+            "Codice" : 9,
+            "Descrizione" : "Barbera \n Vino rosso",
+            "Categoria" : "Vini",
+            "img" : "http://images.unadonna.it/macchia-vino.jpg",
+            "opzioni" : []
+        }
+    ]
+}
