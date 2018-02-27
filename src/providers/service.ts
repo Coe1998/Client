@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, RequestOptions } from '@angular/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/timeout';
@@ -8,16 +9,36 @@ import { Platform } from 'ionic-angular';
 
 @Injectable()
 export class Service {
-    public SERVICE_BASE_URL = "../assets/data";
+    public SERVICE_BASE_URL = "../assets/data/";
+    private baseURI: string  = "http://localhost:8000/";
 
-    constructor(private platform: Platform, private http: Http, private requestOptions: RequestOptions) {
+    constructor(private platform: Platform, private http: Http, private requestOptions: RequestOptions, public httpClient : HttpClient,) {
     }
-
+    /*
+     * JSON SERVICE
+     */
     public getProdotti() : Observable<any> {
-        let serviceUrl: string = this.SERVICE_BASE_URL + "/prodotti.json";
+        let serviceUrl: string = this.SERVICE_BASE_URL + "prodotti.json";
         console.log("serviceUrl => " + serviceUrl);
         return this.callService(serviceUrl, true);
     }
+    /*
+     * PHP SERVER DATA RETRIEVER
+     */
+    public getProdottiPhp() : Observable<any> {
+        let headers:any = new HttpHeaders({ 'Content-Type': 'application/json' }),
+        options:any	= { "key" : "retrieve-prodotti" },
+        url: any = this.baseURI + "server.php";
+
+        return this.http.post(url, JSON.stringify(options), headers);
+      //return this.http.get('http://localhost:8000/retrieve-prodotti.php');
+    }
+
+
+
+
+
+
 
     private callService(serviceUrl: string, isBlocking: boolean = true): Observable<any>{
         return this.http.get(serviceUrl)

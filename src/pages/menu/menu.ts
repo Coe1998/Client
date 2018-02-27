@@ -9,9 +9,10 @@ import { Service } from './../../providers/service';
   templateUrl: 'menu.html',
 })
 export class MenuPage {
-  prodotti:any;
+  public prodotti:any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public service: Service) {
+    /*
     service.getProdotti().subscribe(
       response =>{
         this.prodotti = response.data;
@@ -21,6 +22,17 @@ export class MenuPage {
         console.log("ERRORE\n", error);
       }
     );
+    */
+    service.getProdottiPhp()
+    .subscribe((data : any) =>
+    {
+       console.log(JSON.parse(data._body));
+       this.prodotti = JSON.parse(data._body);
+    },
+    (error : any) =>
+    {
+       console.dir(error);
+    });
   }
 
   ionViewDidLoad() {
