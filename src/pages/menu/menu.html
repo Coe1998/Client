@@ -22,45 +22,12 @@
           </ion-card-content>
         </ion-card>
       </ion-col>
-      <!--
-      <ion-col col-6>
-        <ion-card>
-          <img src="http://images.unadonna.it/macchia-vino.jpg"/>
-          <ion-card-content>
-            <ion-card-title>
-              Barbera \n Vino rosso
-            </ion-card-title>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-      <ion-col col-6>
-          <ion-card>
-            <img src="http://images.unadonna.it/macchia-vino.jpg"/>
-            <ion-card-content>
-              <ion-card-title>
-                Barbera \n Vino rosso
-              </ion-card-title>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-        <ion-col col-6>
-          <ion-card>
-            <img src="http://images.unadonna.it/macchia-vino.jpg"/>
-            <ion-card-content>
-              <ion-card-title>
-                Barbera \n Vino rosso
-              </ion-card-title>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-        -->
     </ion-row>
   </ion-grid>
   <ion-item class="bottom-category-bar">
       <ion-label>CATEGORIA</ion-label>
-      <ion-select>
-        <ion-option value="f" selected>Bibite</ion-option>
-        <ion-option value="m">Panini</ion-option>
+      <ion-select #C (ionChange)="retrieve_prodotti(C.value)">
+          <ion-option *ngFor="let item of categorie; let i = index" [value]="item.id" selected="{{ (i==0)? true : false}}">{{ item.Descrizione }}</ion-option>
       </ion-select>
     </ion-item>
 </ion-content>

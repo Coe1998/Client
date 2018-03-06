@@ -10,23 +10,22 @@ import { Service } from './../../providers/service';
 })
 export class MenuPage {
   public prodotti:any;
-
+  public categorie:any;
+  
   constructor(public navCtrl: NavController, public navParams: NavParams, public service: Service) {
-    /*
-    service.getProdotti().subscribe(
-      response =>{
-        this.prodotti = response.data;
-        console.log(this.prodotti);
-      },
-      error =>{
-        console.log("ERRORE\n", error);
-      }
-    );
-    */
-    service.getProdottiPhp()
+    this.retrieve_categorie();
+    this.retrieve_prodotti(1);
+  }
+
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad MenuPage');
+  }
+
+  retrieve_prodotti(item){
+    this.service.getProdotti(item)
     .subscribe((data : any) =>
     {
-       console.log(JSON.parse(data._body));
+       console.log(data._body);
        this.prodotti = JSON.parse(data._body);
     },
     (error : any) =>
@@ -35,8 +34,16 @@ export class MenuPage {
     });
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad MenuPage');
+  retrieve_categorie(){
+    this.service.getCategorie()
+    .subscribe((data : any) =>
+    {
+       console.log(data._body);
+       this.categorie = JSON.parse(data._body);
+    },
+    (error : any) =>
+    {
+       console.dir(error);
+    });
   }
-
 }

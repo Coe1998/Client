@@ -10,32 +10,47 @@ import { Platform } from 'ionic-angular';
 @Injectable()
 export class Service {
     public SERVICE_BASE_URL = "../assets/data/";
-    private baseURI: string  = "http://localhost:8000/";
+    private baseURI: string  = "http://localhost:8000/server.php";
 
     constructor(private platform: Platform, private http: Http, private requestOptions: RequestOptions, public httpClient : HttpClient,) {
     }
     /*
      * JSON SERVICE
      */
+    /*
     public getProdotti() : Observable<any> {
         let serviceUrl: string = this.SERVICE_BASE_URL + "prodotti.json";
         console.log("serviceUrl => " + serviceUrl);
         return this.callService(serviceUrl, true);
     }
+    */
     /*
      * PHP SERVER DATA RETRIEVER
      */
-    public getProdottiPhp() : Observable<any> {
+    public getProdotti(item): Observable<any> {
         let headers:any = new HttpHeaders({ 'Content-Type': 'application/json' }),
-        options:any	= { "key" : "retrieve-prodotti" },
-        url: any = this.baseURI + "server.php";
+        options:any	= { "key" : "retrieve-prodotti", "categoria": item },
+        url: any = this.baseURI;
 
         return this.http.post(url, JSON.stringify(options), headers);
-      //return this.http.get('http://localhost:8000/retrieve-prodotti.php');
     }
 
+    public getCategorie(): Observable<any> {
+        let headers:any = new HttpHeaders({ 'Content-Type': 'application/json' }),
+        options:any	= { "key" : "retrieve-categorie" },
+        url: any = this.baseURI;
 
+        return this.http.post(url, JSON.stringify(options), headers);
+    }
+    public insertProdottiPhp() {
+        console.log('insert into prodotti');
+        let prodotti = [];
+        let headers:any = new HttpHeaders({ 'Content-Type': 'application/json' }),
+        options:any	= { "key" : "insert-prodotti", "prodotti" : prodotti  },
+        url: any = this.baseURI;
 
+        return this.http.post(url, JSON.stringify(options), headers);
+    }
 
 
 
@@ -44,8 +59,7 @@ export class Service {
         return this.http.get(serviceUrl)
         .map(this.extractData)
         .catch(this.handleError)
-        .finally(() => {
-
+        .finally(() => { 
         });
     }
     private extractData(res: Response) {
