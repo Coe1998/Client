@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+
+import { SelectoptionsPage } from './../selectoptions/selectoptions';
 
 import { Service } from './../../providers/service';
 
@@ -12,7 +14,7 @@ export class MenuPage {
   public prodotti:any;
   public categorie:any;
   
-  constructor(public navCtrl: NavController, public navParams: NavParams, public service: Service) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public service: Service) {
     this.retrieve_categorie();
     this.retrieve_prodotti(1);
   }
@@ -45,5 +47,9 @@ export class MenuPage {
     {
        console.dir(error);
     });
+  }
+
+  openSelectOption(item){
+    this.modalCtrl.create(SelectoptionsPage, {"prodotto" : item}).present();
   }
 }

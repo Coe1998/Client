@@ -1,0 +1,24 @@
+page-selectoptions {
+    background-color: rgba(0, 0, 0, 0.5);
+    
+    ion-content{
+        top: 10%;
+        left: 10%;
+        width: 80%;
+        height: 375px; // <-- fixed
+        //height: 75%; // <-- will stretch to screen size
+        border-radius: 10px;
+        .scroll-content {
+            border-radius: 20px;
+        }
+    }
+    ion-header{
+        top: 10%;
+        left: 10%;
+        width: 80%;
+        border-radius: 20px;
+        .toolbar-title{
+            overflow: visible;
+        }
+    }
+}

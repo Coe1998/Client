@@ -42,6 +42,7 @@ export class Service {
 
         return this.http.post(url, JSON.stringify(options), headers);
     }
+    /*
     public insertProdottiPhp() {
         console.log('insert into prodotti');
         let prodotti = [];
@@ -51,7 +52,16 @@ export class Service {
 
         return this.http.post(url, JSON.stringify(options), headers);
     }
+    */
 
+    public getOpzioni(idProd){
+        console.log('idProd', idProd);
+        let headers:any = new HttpHeaders({ 'Content-Type': 'application/json' }),
+        options:any	= { "key" : "retrieve-opzioni", "prodotto" : idProd},
+        url: any = this.baseURI;
+
+        return this.http.post(url, JSON.stringify(options), headers);
+    }
 
 
 
