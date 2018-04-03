@@ -9,17 +9,15 @@
     </ion-buttons>
   </ion-navbar>
 </ion-header>
-<ion-content padding color="primaryçLggfx">
-  <ion-content padding color="primaryçLggfx">
+<ion-content padding color="primary">
+  <ion-content padding color="primary">
   <ion-grid>
     <ion-row>
       <ion-col col-6 *ngFor="let item of prodotti">
         <ion-card>
-          <img src={{item.Img}}/>
+          <img src="http://mybar201718.altervista.org/imgs/{{item.Img}}"/>
           <ion-card-content>
-            <ion-card-title>
-              {{item.Descrizione}}
-            </ion-card-title>
+            {{item.Descrizione}} <br/> {{item.Prezzo}}€
           </ion-card-content>
         </ion-card>
       </ion-col>
