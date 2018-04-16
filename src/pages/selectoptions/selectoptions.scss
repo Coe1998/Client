@@ -5,11 +5,14 @@ page-selectoptions {
         top: 10%;
         left: 10%;
         width: 80%;
-        height: 375px; // <-- fixed
+        height: 40vh; // <-- fixed
         //height: 75%; // <-- will stretch to screen size
         border-radius: 10px;
         .scroll-content {
             border-radius: 20px;
+        }
+        ion-list{
+            margin-bottom: 0px !important;
         }
     }
     ion-header{

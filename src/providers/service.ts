@@ -9,27 +9,23 @@ import { Platform } from 'ionic-angular';
 
 @Injectable()
 export class Service {
+    public tavolo: any = {};
+    public testataOrdine: any = {};
+    public idTestata: number;
     public SERVICE_BASE_URL = "../assets/data/";
     private baseURI: string  = "http://localhost:8000/server.php";
 
     constructor(private platform: Platform, private http: Http, private requestOptions: RequestOptions, public httpClient : HttpClient,) {
     }
     /*
-     * JSON SERVICE
-     */
-    /*
-    public getProdotti() : Observable<any> {
-        let serviceUrl: string = this.SERVICE_BASE_URL + "prodotti.json";
-        console.log("serviceUrl => " + serviceUrl);
-        return this.callService(serviceUrl, true);
-    }
-    */
-    /*
-     * PHP SERVER DATA RETRIEVER
+     * PHP SERVER
      */
     public getProdotti(item): Observable<any> {
         let headers:any = new HttpHeaders({ 'Content-Type': 'application/json' }),
-        options:any	= { "key" : "retrieve-prodotti", "categoria": item },
+        options:any	= { 
+            "key" : "retrieve-prodotti", 
+            "categoria": item 
+        },
         url: any = this.baseURI;
 
         return this.http.post(url, JSON.stringify(options), headers);
@@ -37,11 +33,60 @@ export class Service {
 
     public getCategorie(): Observable<any> {
         let headers:any = new HttpHeaders({ 'Content-Type': 'application/json' }),
-        options:any	= { "key" : "retrieve-categorie" },
+        options:any	= { 
+            "key" : "retrieve-categorie" 
+        },
         url: any = this.baseURI;
 
         return this.http.post(url, JSON.stringify(options), headers);
     }
+
+    public getProdConOpz() : Observable<any>{
+        let headers:any = new HttpHeaders({ 'Content-Type': 'application/json' }),
+        options:any	= { 
+            "key" : "retrieve-prodotti-conopz" 
+        },
+        url: any = this.baseURI;
+
+        return this.http.post(url, JSON.stringify(options), headers);   
+    }
+
+    public getTavolo(_idTavolo) : Observable<any> {
+        let headers:any = new HttpHeaders({ 'Content-Type': 'application/json' }),
+        options:any	= { 
+            "key" : "retrieve-tavolo", 
+            "tavolo" : _idTavolo 
+        },
+        url: any = this.baseURI;
+
+        return this.http.post(url, JSON.stringify(options), headers); 
+    }
+
+    public getLastID(_tabella) : Observable<any> {
+        let headers:any = new HttpHeaders({ 'Content-Type': 'application/json' }),
+        options:any	= { 
+            "key" : "retrieve-ultimo-id", 
+            "tabella": _tabella
+        },
+        url: any = this.baseURI;
+
+        return this.http.post(url, JSON.stringify(options), headers); 
+    }
+
+    public createTestataOrdine() : Observable<any> {
+        console.log('this.service.idTestata = ', this.idTestata);
+        console.log('this.service.tavolo = ', this.tavolo);
+        let headers:any = new HttpHeaders({ 'Content-Type': 'application/json' }),
+        options:any	= { 
+            "key" : "create-testata-ordine", 
+            'id-tavolo': this.tavolo.id, 
+            'id-testata': this.idTestata 
+        },
+        url: any = this.baseURI;
+
+        return this.http.post(url, JSON.stringify(options), headers); 
+    }
+    
     /*
     public insertProdottiPhp() {
         console.log('insert into prodotti');
@@ -54,16 +99,41 @@ export class Service {
     }
     */
 
-    public getOpzioni(idProd){
-        console.log('idProd', idProd);
+    public getOpzioni(_idProd){
+        //console.log('idProd', idProd);
         let headers:any = new HttpHeaders({ 'Content-Type': 'application/json' }),
-        options:any	= { "key" : "retrieve-opzioni", "prodotto" : idProd},
+        options:any	= { 
+            "key" : "retrieve-opzioni", 
+            "prodotto" : _idProd
+        },
         url: any = this.baseURI;
 
         return this.http.post(url, JSON.stringify(options), headers);
     }
 
+    public ordina(_idProd, _opts){
+        let headers:any = new HttpHeaders({ 'Content-Type': 'application/json' }),
+        options:any	= { 
+            "key" : "add-prodotto-to-ordine", 
+            "id-testata": this.idTestata, 
+            "id-prodotto": _idProd, 
+            "opzioni": _opts 
+        },
+        url: any = this.baseURI;
 
+        return this.http.post(url, JSON.stringify(options), headers);
+    }
+    /*
+     *  ordina
+     *  > dalla pagina menu il parametro _opts resta a null
+     *  > dalla pagine selectoptions si manda l'array di index con {id, choosen}, 
+     *    valore booleano che indica se è stato scelto o meno
+     *  DA PHP
+     *  > se il valore di _opts è a null non entra nella if e quindi non aggiunge nulla alla
+     *    tabella RelOrdiniOpzioni, altrimenti scorre tutto l'array, nel caso in cui l'indice
+     *    sia marcato a true si inserisce nella tabella, associando così la riga ordini all'
+     *    opzione.
+     */
 
     private callService(serviceUrl: string, isBlocking: boolean = true): Observable<any>{
         return this.http.get(serviceUrl)

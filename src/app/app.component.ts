@@ -11,7 +11,7 @@ import { Service } from './../providers/service';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = MenuPage;
+  rootPage:any = HomePage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, service: Service) {
     platform.ready().then(() => {

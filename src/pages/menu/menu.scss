@@ -1,13 +1,17 @@
 page-menu {
     .bottom-category-bar{
         position: fixed !important;
-        bottom: 0vh;
-        left:0vh;
+        bottom: 0vh !important;
+        left:0vh !important;
     }
     ion-card{
         height:100%;
     }
     ion-card-content{
         margin-top: 1vh;
+    }
+
+    .back-button {
+        display: none !important;
     }
 }

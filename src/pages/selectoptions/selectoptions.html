@@ -1,19 +1,28 @@
 <ion-header>
   <ion-navbar>
       <ion-buttons left>
-          <button ion-button icon-only (click)="viewCtrl.dismiss()">
+          <button ion-button icon-only (click)="this.closeModal()">
               <ion-icon name="arrow-back"></ion-icon>
           </button>
       </ion-buttons>
     <ion-title>{{this.prodotto.Descrizione}}</ion-title>
+    <ion-buttons right>
+        <button ion-button icon-only (click)="this.ordina()">
+            <ion-icon name="add"></ion-icon>
+        </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 <ion-content padding>
-  <ion-list>
-    <ion-item *ngFor="let item of opzioni">
-        <ion-label>{{item.Descrizione}} <br/> {{item.PrezzoTot}} €</ion-label>
-        <ion-checkbox></ion-checkbox>    
-      <ion-checkbox 
-    </ion-item>
-  </ion-list>
+    <ion-label *ngIf="!this.hasOpt">Nessuna opzione disponibile</ion-label>
+    <ion-list *ngIf="this.hasOpt">
+        <ion-item *ngFor="let item of opzioni;let i = index">
+            <ion-label>{{item.Descrizione}} <br/> {{item.PrezzoTot}} €</ion-label>
+            <ion-checkbox (click)="setChoice(i)"></ion-checkbox>
+        </ion-item>
+    </ion-list>
 </ion-content>
+
+<!-- #1 CREARE LA FUNZIONE ordina NEL service.ts
+     #3 CREARE LA CHIAMATA POST IN selectoptions.ts CON RELATIVO MESSAGGIO DI RISPOSTA.  
+-->

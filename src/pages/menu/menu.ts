@@ -11,45 +11,86 @@ import { Service } from './../../providers/service';
   templateUrl: 'menu.html',
 })
 export class MenuPage {
-  public prodotti:any;
-  public categorie:any;
+  public prodotti: any;
+  public categorie: any;
+  public hasOptList: any;
   
   constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public service: Service) {
     this.retrieve_categorie();
     this.retrieve_prodotti(1);
+    this.retrieve_hasOpt();
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad MenuPage');
+    //console.log('ionViewDidLoad MenuPage');
+  }
+
+  retrieve_hasOpt(){
+    this.service.getProdConOpz()
+    .subscribe((data : any) =>
+    {
+			 //console.log('hasOpt',data._body);
+			 this.hasOptList = JSON.parse(data._body);
+    },
+    (error : any) =>
+    {
+       console.dir(error);
+    });
   }
 
   retrieve_prodotti(item){
     this.service.getProdotti(item)
     .subscribe((data : any) =>
     {
-       console.log(data._body);
+       //console.log(data._body);
        this.prodotti = JSON.parse(data._body);
     },
     (error : any) =>
     {
-       console.dir(error);
+      console.dir(error);
     });
   }
 
   retrieve_categorie(){
     this.service.getCategorie()
-    .subscribe((data : any) =>
-    {
-       console.log(data._body);
-       this.categorie = JSON.parse(data._body);
-    },
-    (error : any) =>
-    {
-       console.dir(error);
-    });
+    .subscribe(
+      (data : any) =>
+      {
+        //console.log(data._body);
+        this.categorie = JSON.parse(data._body);
+      },
+      (error : any) =>
+      {
+        console.dir(error);
+      }
+    );
   }
 
   openSelectOption(item){
-    this.modalCtrl.create(SelectoptionsPage, {"prodotto" : item}).present();
+    if(this.esistonoOpzioni(item.id))
+      this.modalCtrl.create(SelectoptionsPage, {"prodotto" : item}).present();
+		else 
+			this.service.ordina(item.id, []).subscribe(
+        (data : any) =>
+        {
+          alert(data._body)
+        },
+        (error : any) =>
+        {
+          console.dir(error);
+        }
+      );
+  }
+
+
+
+  esistonoOpzioni(id){
+		var esito: boolean = false;
+    this.hasOptList.forEach(item => {
+        if(item.id == id){
+					esito = true;
+        }
+    });
+    return esito;
   }
 }
