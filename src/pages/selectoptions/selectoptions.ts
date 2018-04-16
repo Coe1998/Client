@@ -20,7 +20,7 @@ constructor(public navCtrl: NavController, public navParams: NavParams, public v
     (data : any) =>
     {
         this.opzioni = JSON.parse(data._body);
-        if(this.opzioni.length < 1)//this.closeModal();
+        if(this.opzioni.length < 1)
             this.hasOpt = false;
         else {
             this.opzioni.forEach(item => {

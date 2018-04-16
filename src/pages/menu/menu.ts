@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, AlertController } from 'ionic-angular';
 
 import { SelectoptionsPage } from './../selectoptions/selectoptions';
 
@@ -15,7 +15,7 @@ export class MenuPage {
   public categorie: any;
   public hasOptList: any;
   
-  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public service: Service) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public service: Service, public alertCtrl: AlertController) {
     this.retrieve_categorie();
     this.retrieve_prodotti(1);
     this.retrieve_hasOpt();
@@ -73,13 +73,23 @@ export class MenuPage {
 			this.service.ordina(item.id, []).subscribe(
         (data : any) =>
         {
-          alert(data._body)
+          //alert(data._body)
+          this.presentAlert();
         },
         (error : any) =>
         {
           console.dir(error);
         }
       );
+  }
+
+  presentAlert() {
+    let alert = this.alertCtrl.create({
+      title: '',
+      subTitle: 'Prodotto inserito nell\'ordine' ,
+      buttons: ['OK']
+    });
+    alert.present();
   }
 
 
