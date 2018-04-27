@@ -8,6 +8,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { MenuPage } from './../pages/menu/menu';
 import { SelectoptionsPage } from './../pages/selectoptions/selectoptions';
+import { RiepilogoPage } from '../pages/riepilogo/riepilogo';
 
 import { Service } from './../providers/service';
 import { HttpModule } from '@angular/http';
@@ -20,7 +21,8 @@ import { HttpClientModule } from '@angular/common/http';
     MyApp,
     HomePage,
     MenuPage,
-    SelectoptionsPage
+    SelectoptionsPage,
+    RiepilogoPage
   ],
   imports: [
     BrowserModule,
@@ -33,7 +35,8 @@ import { HttpClientModule } from '@angular/common/http';
     MyApp,
     HomePage,
     MenuPage,
-    SelectoptionsPage    
+    SelectoptionsPage,
+    RiepilogoPage 
   ],
   providers: [
     StatusBar,

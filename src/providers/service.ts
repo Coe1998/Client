@@ -126,7 +126,7 @@ export class Service {
 
     public getRigheOrdine() {
         let headers:any = new HttpHeaders({ 'Content-Type': 'application/json' }),
-        options:any	= { 
+        options:any	= {
             "key" : "retrieve-righe-ordine", 
             "id-testata": this.idTestata,
         },
@@ -134,6 +134,40 @@ export class Service {
 
         return this.http.post(url, JSON.stringify(options), headers);
     }
+
+    public deleteRigaFromOrdine(_idRigOrd) {
+        let headers:any = new HttpHeaders({ 'Content-Type': 'application/json' }),
+        options:any	= {
+            "key" : "delete-riga-from-ordine", 
+            "id-riga": _idRigOrd,
+        },
+        url: any = this.baseURI;
+
+        return this.http.post(url, JSON.stringify(options), headers);
+    }
+
+    public confermaOrdine() {
+        let headers:any = new HttpHeaders({ 'Content-Type': 'application/json' }),
+        options:any	= {
+            "key" : "conferma-ordine", 
+            "id-testata": this.idTestata,
+        },
+        url: any = this.baseURI;
+
+        return this.http.post(url, JSON.stringify(options), headers);
+    }
+
+    public getTotale() {
+        let headers:any = new HttpHeaders({ 'Content-Type': 'application/json' }),
+        options:any	= {
+            "key" : "retrieve-totale-ordine", 
+            "id-testata": this.idTestata,
+        },
+        url: any = this.baseURI;
+
+        return this.http.post(url, JSON.stringify(options), headers);
+    }
+
     /*
      *  ordina
      *  > dalla pagina menu il parametro _opts resta a null

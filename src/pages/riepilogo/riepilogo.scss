@@ -1,3 +1,9 @@
 page-riepilogo {
-
+    .back-button {
+        display: none !important;
+    }
+    .item-tot {
+        position: fixed;
+        bottom:0;
+    }
 }

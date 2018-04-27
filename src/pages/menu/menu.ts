@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, AlertController } from 'ionic-angular';
 
 import { SelectoptionsPage } from './../selectoptions/selectoptions';
+import { RiepilogoPage } from '../riepilogo/riepilogo';
 
 import { Service } from './../../providers/service';
 
@@ -11,8 +12,8 @@ import { Service } from './../../providers/service';
   templateUrl: 'menu.html',
 })
 export class MenuPage {
-  public prodotti: any;
-  public categorie: any;
+  public prodotti: Prodotti[]= new Array<Prodotti>();
+  public categorie: Categorie[] = new Array<Categorie>();
   public hasOptList: any;
   
   constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public service: Service, public alertCtrl: AlertController) {
@@ -30,7 +31,7 @@ export class MenuPage {
     .subscribe((data : any) =>
     {
 			 //console.log('hasOpt',data._body);
-			 this.hasOptList = JSON.parse(data._body);
+       this.hasOptList = JSON.parse(data._body);
     },
     (error : any) =>
     {
@@ -71,16 +72,17 @@ export class MenuPage {
       this.modalCtrl.create(SelectoptionsPage, {"prodotto" : item}).present();
 		else 
 			this.service.ordina(item.id, []).subscribe(
-        (data : any) =>
-        {
-          //alert(data._body)
+        (data : any) => {
           this.presentAlert();
         },
-        (error : any) =>
-        {
+        (error : any) => {
           console.dir(error);
         }
       );
+  }
+
+  openRiepilogo() {
+    this.navCtrl.push(RiepilogoPage);
   }
 
   presentAlert() {
@@ -92,8 +94,6 @@ export class MenuPage {
     alert.present();
   }
 
-
-
   esistonoOpzioni(id){
 		var esito: boolean = false;
     this.hasOptList.forEach(item => {
@@ -103,4 +103,21 @@ export class MenuPage {
     });
     return esito;
   }
+}
+
+
+interface Categorie {
+  'id': number,
+  'Descrizione': string
+}
+
+interface Prodotti {
+  'id': number,
+  'Descrizione': string,
+  'Disponibile': string[1],
+  'Img': string,
+  'Info': string,
+  'Prezzo': string,
+  'idCategoria': number
+
 }

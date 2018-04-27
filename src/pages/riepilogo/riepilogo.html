@@ -1,14 +1,25 @@
 <ion-header>
-  <ion-navbar>
+    <ion-navbar color="dark">
+      <ion-buttons start navPop>
+        <button ion-button icon-only><ion-icon name="arrow-dropleft"></ion-icon></button>
+      </ion-buttons>
     <ion-title>Riepilogo Ordine</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="confermaOrdine()"><ion-icon name="checkmark"></ion-icon></button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 <ion-content padding>
-  <ion-list>
-    <ion-item>
-      <button ion-button icon-only outline item-end (click)="deleteProdotto(2)">
+  <ion-list >
+    <ion-item *ngFor="let item of ordine;let i = index">
+      <label> {{ item.descrizione }} - {{ item.prezzo }}</label>
+      <button ion-button icon-only outline item-end (click)="deleteProdotto(item.idRigaOrdine)">
         <ion-icon name="trash"></ion-icon>
       </button>
     </ion-item>
   </ion-list>
+  <ion-item class="item-tot"> 
+    <ion-label> TOTALE:  {{ this.totaleOrdine }} €</ion-label>
+  </ion-item>
+  
 </ion-content>

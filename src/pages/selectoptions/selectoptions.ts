@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, AlertController } from 'ionic-angular';
 
 import { Service } from './../../providers/service';
 
@@ -14,11 +14,10 @@ public prodotto: any = "";
 public opzioni: any;
 public optionsIndex: {'id' : number, 'choosen' : boolean}[] = new Array<{'id' : number, 'choosen' : boolean}>();
 
-constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public service: Service) {
+constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, public service: Service, public alertCtrl: AlertController) {
     this.prodotto = this.navParams.get('prodotto');
     service.getOpzioni(this.prodotto.id).subscribe(
-    (data : any) =>
-    {
+    (data : any) => {
         this.opzioni = JSON.parse(data._body);
         if(this.opzioni.length < 1)
             this.hasOpt = false;
@@ -28,8 +27,7 @@ constructor(public navCtrl: NavController, public navParams: NavParams, public v
             });
         }
     },
-    (error : any) =>
-    {
+    (error : any) => {
     console.dir(error);
     });
 }
@@ -41,17 +39,24 @@ setChoice(i){
 
 ordina(){
     this.service.ordina(this.prodotto.id, this.optionsIndex).subscribe(
-        (data : any) =>
-        {
-          alert(data._body)
+        (data : any) => {
+            this.presentAlert();
         },
-        (error : any) =>
-        {
+        (error : any) => {
           console.dir(error);
         }
       );
     //console.log('opzioni', this.opzioni);
     //console.log('opzioni con index', this.optionsIndex);
+}
+
+presentAlert() {
+    let alert = this.alertCtrl.create({
+      title: '',
+      subTitle: 'Prodotto inserito nell\'ordine' ,
+      buttons: ['OK']
+    });
+    alert.present();
 }
 
 closeModal(){

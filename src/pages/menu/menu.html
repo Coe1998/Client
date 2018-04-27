@@ -5,7 +5,7 @@
     </ion-buttons>
     <ion-title> MENU </ion-title>
     <ion-buttons end>
-      <button ion-button icon-only><ion-icon name="list"></ion-icon></button>
+      <button ion-button icon-only (click)="openRiepilogo()"><ion-icon name="list"></ion-icon></button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
@@ -25,9 +25,9 @@
     </ion-row>
   </ion-grid>
   <ion-item class="bottom-category-bar">
-      <ion-label>CATEGORIA</ion-label>
-      <ion-select #C (ionChange)="retrieve_prodotti(C.value)" interface="action-sheet">
-          <ion-option *ngFor="let item of categorie; let i = index" [value]="item.id" selected="{{ (i==0)? true : false}}">{{ item.Descrizione }}</ion-option>
-      </ion-select>
-    </ion-item>
+    <ion-label>CATEGORIA</ion-label>
+    <ion-select #C (ionChange)="retrieve_prodotti(C.value)" interface="action-sheet">
+        <ion-option *ngFor="let item of categorie; let i = index" [value]="item.id" selected="{{ (i==0)? true : false}}">{{ item.Descrizione }}</ion-option>
+    </ion-select>
+  </ion-item>
 </ion-content>
