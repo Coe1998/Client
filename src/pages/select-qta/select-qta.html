@@ -1,0 +1,24 @@
+<ion-header>
+    <ion-navbar>
+        <ion-buttons left>
+            <button ion-button icon-only (click)="this.closeModal()">
+                <ion-icon name="arrow-back"></ion-icon>
+            </button>
+        </ion-buttons>
+      <ion-title>{{this.prodotto.Descrizione}}</ion-title>
+      <ion-buttons right>
+          <button ion-button icon-only (click)="this.ordina()">
+              <ion-icon name="add"></ion-icon>
+          </button>
+      </ion-buttons>
+    </ion-navbar>
+  </ion-header>
+  <ion-content padding>
+      <ion-row>
+          <ion-col col-3>
+              <ion-icon name="remove-circle" (click)="decrement(1)"></ion-icon>
+              {{ this.qta }}
+              <ion-icon name="add-circle" (click)="increment(1)"></ion-icon>
+          </ion-col>
+      </ion-row>
+  </ion-content>

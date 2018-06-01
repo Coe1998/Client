@@ -14,15 +14,25 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding>
-    <ion-label *ngIf="!this.hasOpt">Nessuna opzione disponibile</ion-label>
-    <ion-list *ngIf="this.hasOpt">
-        <ion-item *ngFor="let item of opzioni;let i = index">
-            <ion-label>{{item.Descrizione}} <br/> {{item.PrezzoTot}} €</ion-label>
-            <ion-checkbox (click)="setChoice(i)"></ion-checkbox>
-        </ion-item>
-    </ion-list>
+    <ion-row *ngFor="let item of opzioni;let i = index">
+        <ion-col col-2>
+            <ion-checkbox (click)="setChoice(i)" [ngModel]="this.optionsIndex[i].choosen"></ion-checkbox>
+        </ion-col>
+        <ion-col col-7>
+            <ion-label>
+                {{item.Descrizione}} <br/> {{item.PrezzoTot}} €
+            </ion-label>
+        </ion-col>
+        <ion-col col-3>
+            <ion-icon name="remove-circle" (click)="decrement(i)"></ion-icon>
+            {{ this.showQta(i) }}
+            <ion-icon name="add-circle" (click)="increment(i)"></ion-icon>
+        </ion-col>
+    </ion-row>
 </ion-content>
 
-<!-- #1 CREARE LA FUNZIONE ordina NEL service.ts
-     #3 CREARE LA CHIAMATA POST IN selectoptions.ts CON RELATIVO MESSAGGIO DI RISPOSTA.  
+<!--
+    modificare il sistema di ordinazione, settare la possibilità di decidere le quantità
+
+    provare ad usare la ion-grid con le row per fare un layout decente cazzo.
 -->

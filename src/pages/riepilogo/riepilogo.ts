@@ -44,6 +44,23 @@ export class RiepilogoPage {
       }
     );
   }
+
+  alterQta(_idRigOrd, _upd, _nowQta) {
+    this.service.updateQta(_idRigOrd, _upd, _nowQta).subscribe(
+      (data: any) => {
+        if(JSON.parse(data._body).status == 1){
+          this.retrieve_righe_ordine();
+        }
+        else {
+          this.presentAlert(JSON.parse(data._body).message, ['OK']);
+        }
+      },
+      (error: any) => {
+        console.log(error);
+      }
+    );
+  }
+
   presentAlert(_sub, _btns) {
     let alert = this.alertCtrl.create({
       title: '',
@@ -51,11 +68,6 @@ export class RiepilogoPage {
       buttons: _btns
     });
     alert.present();
-    /*
-    setTimeout(()=>{
-      alert.dismiss();
-    }, 1000);
-    */
   }
   
   confermaOrdine() {
@@ -97,11 +109,22 @@ export class RiepilogoPage {
     );
   }
 
+  cur(a) {
+    let b: string = a.toString();
+    if(b[0] == '0'){
+      return b.substring(2, b.length) + " €";
+    }
+    else 
+      return b + " €";
+  }
+
 }
 
 interface RigaOrdine {
   'idRigaOrdine': number, 
   'descrizione': string, 
-  'prezzo': string, 
-  'idRelOrdOpz': number
+  'prezzo': number, 
+  'idRelOrdOpz': number,
+  'qta': number,
+  'subtot': number
 }

@@ -1,3 +1,4 @@
+import { SelectQtaPage } from './../select-qta/select-qta';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController, AlertController } from 'ionic-angular';
 
@@ -40,7 +41,8 @@ export class MenuPage {
   }
 
   retrieve_prodotti(item){
-    this.service.getProdotti(item)
+    let cat :string = item;
+    this.service.getProdotti(cat)
     .subscribe((data : any) =>
     {
        //console.log(data._body);
@@ -70,7 +72,8 @@ export class MenuPage {
   openSelectOption(item){
     if(this.esistonoOpzioni(item.id))
       this.modalCtrl.create(SelectoptionsPage, {"prodotto" : item}).present();
-		else 
+    else 
+      /*
 			this.service.ordina(item.id, []).subscribe(
         (data : any) => {
           this.presentAlert();
@@ -79,6 +82,8 @@ export class MenuPage {
           console.dir(error);
         }
       );
+      */
+     this.modalCtrl.create(SelectQtaPage, {"prodotto" : item}).present();
   }
 
   openRiepilogo() {

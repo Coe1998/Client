@@ -13,21 +13,20 @@ export class Service {
     public testataOrdine: any = {};
     public idTestata: number;
     public SERVICE_BASE_URL = "../assets/data/";
-    private baseURI: string  = "http://localhost:8000/server.php";
-
+    //private baseURI: string  = "http://localhost:8000/server.php";
+    private baseURI: string = "http://mybar201718.altervista.org/php/server.php";
     constructor(private platform: Platform, private http: Http, private requestOptions: RequestOptions, public httpClient : HttpClient,) {
     }
     /*
      * PHP SERVER
      */
-    public getProdotti(item): Observable<any> {
+    public getProdotti(item: string): Observable<any> {
         let headers:any = new HttpHeaders({ 'Content-Type': 'application/json' }),
         options:any	= { 
             "key" : "retrieve-prodotti", 
             "categoria": item 
         },
         url: any = this.baseURI;
-
         return this.http.post(url, JSON.stringify(options), headers);
     }
 
@@ -37,7 +36,6 @@ export class Service {
             "key" : "retrieve-categorie" 
         },
         url: any = this.baseURI;
-
         return this.http.post(url, JSON.stringify(options), headers);
     }
 
@@ -111,13 +109,14 @@ export class Service {
         return this.http.post(url, JSON.stringify(options), headers);
     }
 
-    public ordina(_idProd, _opts){
+    public ordina(_prod, _opts, _singleQta){
         let headers:any = new HttpHeaders({ 'Content-Type': 'application/json' }),
         options:any	= { 
             "key" : "add-prodotto-to-ordine", 
             "id-testata": this.idTestata, 
-            "id-prodotto": _idProd, 
-            "opzioni": _opts 
+            "prodotto": _prod, 
+            "opzioni": _opts,
+            "sQta": _singleQta
         },
         url: any = this.baseURI;
 
@@ -140,6 +139,23 @@ export class Service {
         options:any	= {
             "key" : "delete-riga-from-ordine", 
             "id-riga": _idRigOrd,
+            "id-testata": this.idTestata
+        },
+        url: any = this.baseURI;
+
+        return this.http.post(url, JSON.stringify(options), headers);
+    }
+
+    public updateQta(_idRigOrd, _upd, _nowQta){
+        if(_nowQta == 0 && _upd == -1){
+            return this.deleteRigaFromOrdine(_idRigOrd);
+        }
+        let headers:any = new HttpHeaders({ 'Content-Type': 'application/json' }),
+        options:any	= {
+            "key" : "update-qta-riga-ordine", 
+            "id-riga": _idRigOrd,
+            "upd": _upd,
+            "id-testata": this.idTestata
         },
         url: any = this.baseURI;
 

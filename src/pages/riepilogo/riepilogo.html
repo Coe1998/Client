@@ -10,16 +10,30 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding>
-  <ion-list >
-    <ion-item *ngFor="let item of ordine;let i = index">
-      <label> {{ item.descrizione }} - {{ item.prezzo }}</label>
+  <ion-row *ngFor="let item of ordine;let i = index">
+    <ion-col col-7>
+        <label> {{ item.descrizione }} - {{ item.prezzo }} € x {{ item.qta }} = {{ item.subtot }}</label>
+    </ion-col>
+    <ion-col col-3>
+      <ion-icon name="remove-circle" (click)="alterQta(item.idRigaOrdine, -1, item.qta)"></ion-icon>
+      <ion-icon name="add-circle" (click)="alterQta(item.idRigaOrdine, +1, item.qta)"></ion-icon>
+    </ion-col>
+    <ion-col col-2>
       <button ion-button icon-only outline item-end (click)="deleteProdotto(item.idRigaOrdine)">
-        <ion-icon name="trash"></ion-icon>
-      </button>
-    </ion-item>
-  </ion-list>
-  <ion-item class="item-tot"> 
+          <ion-icon name="trash"></ion-icon>
+        </button>
+    </ion-col>
+  </ion-row>
+  <ion-row class="item-tot"> 
     <ion-label> TOTALE:  {{ this.totaleOrdine }} €</ion-label>
-  </ion-item>
+  </ion-row>
   
 </ion-content>
+
+<!--
+  cambiare query di aggiunta prodotti, nuova politica: il prodotto + l'opzione diventa il nuovo 'identificatore della riga',
+  aggiungere campo quantità nella rigaordine, √  
+  cambiare query di retrieve del riepilogo, 
+
+  ciao grazie.
+-->

@@ -8,13 +8,14 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { MenuPage } from './../pages/menu/menu';
 import { SelectoptionsPage } from './../pages/selectoptions/selectoptions';
+import { SelectQtaPage } from './../pages/select-qta/select-qta';
 import { RiepilogoPage } from '../pages/riepilogo/riepilogo';
 
 import { Service } from './../providers/service';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 
-
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { HttpClientModule } from '@angular/common/http';
     HomePage,
     MenuPage,
     SelectoptionsPage,
+    SelectQtaPage,
     RiepilogoPage
   ],
   imports: [
@@ -36,12 +38,14 @@ import { HttpClientModule } from '@angular/common/http';
     HomePage,
     MenuPage,
     SelectoptionsPage,
+    SelectQtaPage,
     RiepilogoPage 
   ],
   providers: [
     StatusBar,
     SplashScreen,
     Service,
+    BarcodeScanner,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

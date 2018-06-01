@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, App } from 'ionic-angular';
+import { NavController, App, AlertController } from 'ionic-angular';
 
 import { Service } from './../../providers/service';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 import { MenuPage } from '../menu/menu';
 
@@ -10,14 +11,42 @@ import { MenuPage } from '../menu/menu';
   templateUrl: 'home.html'
 })
 export class HomePage {
+  constructor(public navCtrl: NavController, public service: Service, public barcodeScanner: BarcodeScanner, public alertCtrl: AlertController) {
+    // BROWSER TESTING
+    //this.getTavolo(1);
+    //this.navCtrl.push(MenuPage);
+  }
 
-  constructor(public navCtrl: NavController, public service: Service) {
-    this.getTavolo();
+  scan() {
+    this.barcodeScanner.scan().then(barcodeData => {
+        if(barcodeData.format == 'QR_CODE') {
+          let obj = JSON.parse(barcodeData.text);
+          this.getTavolo(obj.id);
+        }
+        else {
+          this.presentAlert("Barcode non funzionante", ['OK COLPA MIA']);
+        }
+     }).catch(err => {
+         console.log('Error', err);
+     });
+  }
+
+  presentAlert(_sub, _btns) {
+    let alert = this.alertCtrl.create({
+      title: '',
+      subTitle: _sub ,
+      buttons: _btns
+    });
+    alert.present();
+}
+
+  goto(){
+    this.getTavolo(1);
     this.navCtrl.push(MenuPage);
   }
 
-  getTavolo(){//#1
-    this.service.getTavolo(1).subscribe(
+  getTavolo(_scanned){//#1
+    this.service.getTavolo(_scanned).subscribe(
       (data: any) => {
         if(JSON.parse(data._body).length > 0){
           this.service.tavolo = JSON.parse(data._body)[0];
@@ -56,6 +85,7 @@ export class HomePage {
     this.service.createTestataOrdine().subscribe(
       (data: any) => {
         console.log('create-testata-ordine', JSON.parse(data._body));
+        this.navCtrl.push(MenuPage);        
       },
       (error : any) => {
         console.log(error);

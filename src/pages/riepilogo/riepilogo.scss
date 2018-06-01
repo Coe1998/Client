@@ -6,4 +6,11 @@ page-riepilogo {
         position: fixed;
         bottom:0;
     }
+    ion-row {
+        ion-col{
+            button {
+                margin: unset !important;
+            }
+        }
+    }
 }
