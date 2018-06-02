@@ -32,23 +32,33 @@ export class SelectQtaPage {
   }
   
   ordina(){
-      this.service.ordina(this.prodotto, [], this.qta).subscribe(
-          (data : any) => {
-            this.presentAlert();
-          },
-          (error : any) => {
-            console.dir(error);
-          }
-      );
+        if(this.qta > 0){
+            this.service.ordina(this.prodotto, [], this.qta).subscribe(
+                (data : any) => {
+                    let buttons: any = [
+                        {
+                          text: 'OK',
+                          handler: () => {
+                            this.navCtrl.pop();
+                          }
+                        }
+                    ];
+                    this.presentAlert(JSON.parse(data._body).message, buttons);
+                },
+                (error : any) => {
+                console.dir(error);
+                }
+            );
+        }
   }
 
-  presentAlert() {
-      let alert = this.alertCtrl.create({
-      title: '',
-      subTitle: 'Prodotto inserito nell\'ordine' ,
-      buttons: ['OK']
-      });
-      alert.present();
+  presentAlert(_text, _btns) {
+        let alert = this.alertCtrl.create({
+        title: '',
+        subTitle: _text ,
+        buttons: _btns
+        });
+        alert.present();
   }
 
   closeModal(){

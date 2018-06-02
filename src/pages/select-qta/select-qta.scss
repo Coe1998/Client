@@ -2,36 +2,29 @@ page-select-qta {
     background-color: rgba(0, 0, 0, 0.5);
     
     ion-content{
-        top: 10%;
-        left: 10%;
-        width: 80%;
-        height: 40vh; // <-- fixed
-        //height: 75%; // <-- will stretch to screen size
-        border-radius: 10px;
         .scroll-content {
             border-radius: 20px;
         }
         ion-row {
+            height: 100%;
             padding: 10px;
-            border-bottom: 1.5px solid #cdcdcd;
             ion-col {
                 ion-label {
                     margin: unset !important;
                 }
                 ion-icon {
-                    font-size: 5vw;
-                    color: #9B897B;
+                    //font-size: 5vw;
+                    color: color($colors, 'secondary');
                 }
             }
-            [col-3] {
-                //font-size: x-large;
+            [col-4] {
+                text-align: center;
+                margin: auto;
+                font-size: 15vh;
             }
         }
     }
     ion-header{
-        top: 10%;
-        left: 10%;
-        width: 80%;
         border-radius: 20px;
         .toolbar-title{
             overflow: visible;

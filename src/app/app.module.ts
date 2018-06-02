@@ -10,6 +10,7 @@ import { MenuPage } from './../pages/menu/menu';
 import { SelectoptionsPage } from './../pages/selectoptions/selectoptions';
 import { SelectQtaPage } from './../pages/select-qta/select-qta';
 import { RiepilogoPage } from '../pages/riepilogo/riepilogo';
+import { ScontrinoPage } from './../pages/scontrino/scontrino';
 
 import { Service } from './../providers/service';
 import { HttpModule } from '@angular/http';
@@ -24,13 +25,14 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
     MenuPage,
     SelectoptionsPage,
     SelectQtaPage,
-    RiepilogoPage
+    RiepilogoPage,
+    ScontrinoPage
   ],
   imports: [
     BrowserModule,
     HttpModule,
     HttpClientModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp, { swipeBackEnabled: false })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -39,7 +41,8 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
     MenuPage,
     SelectoptionsPage,
     SelectQtaPage,
-    RiepilogoPage 
+    RiepilogoPage,
+    ScontrinoPage
   ],
   providers: [
     StatusBar,

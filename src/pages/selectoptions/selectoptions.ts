@@ -36,21 +36,21 @@ export class SelectoptionsPage {
     setChoice(i){
         this.optionsIndex[i].choosen = !this.optionsIndex[i].choosen;
         this.optionsIndex[i].qta = 0;
-        if(this.optionsIndex[i].qta  < 1)
+        if(this.optionsIndex[i].qta  < 1 && this.optionsIndex[i].choosen)
             this.optionsIndex[i].qta = 1;
     }
 
     increment(i){
-            this.optionsIndex[i].qta++;
+        this.optionsIndex[i].qta++;
         if(this.optionsIndex[i].qta > 0) 
             this.optionsIndex[i].choosen = true;
     }
 
     decrement(i){
-            if(this.optionsIndex[i].qta > 0)
-                this.optionsIndex[i].qta--;
-            if(this.optionsIndex[i].qta < 1)
-                this.optionsIndex[i].choosen = false;                
+        if(this.optionsIndex[i].qta > 0)
+            this.optionsIndex[i].qta--;
+        if(this.optionsIndex[i].qta < 1)
+            this.optionsIndex[i].choosen = false;                
     }
     
     showQta(i){
@@ -58,28 +58,42 @@ export class SelectoptionsPage {
     }
 
     ordina(){
-        this.service.ordina(this.prodotto, this.optionsIndex, 0).subscribe(
-            (data : any) => {
-                let res = JSON.parse(data._body);
-                if(res.status == 1){
-                    this.presentAlert(res.message, ['OK']);
+        if(this.isThereAnyOption()){
+            this.service.ordina(this.prodotto, this.optionsIndex, 0).subscribe(
+                (data : any) => {
+                    let res = JSON.parse(data._body);
+                    let buttons: any = [
+                        {
+                          text: 'OK',
+                          handler: () => {
+                            this.navCtrl.pop();
+                          }
+                        }
+                    ];
+                    this.presentAlert(JSON.parse(data._body).message, buttons);
+                },
+                (error : any) => {
+                console.dir(error);
                 }
-                else {
-                    //eventuale cambio grafica della finestra
-                    this.presentAlert(res.message, ['OK']);                    
-                }
-            },
-            (error : any) => {
-            console.dir(error);
-            }
-        );
+            );
+        }
     }
 
-    presentAlert(_sub, _btns) {
+    isThereAnyOption(): boolean{
+        let esito :boolean = false;
+        this.optionsIndex.forEach(item => {
+            if(item.choosen)
+                esito = true;
+        });
+        return esito;
+    }
+
+   
+    presentAlert(_text, _btns) {
         let alert = this.alertCtrl.create({
-          title: '',
-          subTitle: _sub ,
-          buttons: _btns
+        title: '',
+        subTitle: _text ,
+        buttons: _btns
         });
         alert.present();
     }

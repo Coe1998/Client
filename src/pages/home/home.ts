@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, App, AlertController } from 'ionic-angular';
+import { NavController, App, AlertController, Platform } from 'ionic-angular';
 
 import { Service } from './../../providers/service';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
@@ -11,24 +11,52 @@ import { MenuPage } from '../menu/menu';
   templateUrl: 'home.html'
 })
 export class HomePage {
-  constructor(public navCtrl: NavController, public service: Service, public barcodeScanner: BarcodeScanner, public alertCtrl: AlertController) {
+  public isApp :boolean;
+  constructor(public navCtrl: NavController, public service: Service, public barcodeScanner: BarcodeScanner, public alertCtrl: AlertController, public platform: Platform) {
     // BROWSER TESTING
     //this.getTavolo(1);
     //this.navCtrl.push(MenuPage);
+    if(this.platform.is('core') || this.platform.is('mobileweb')) {
+      this.isApp = false;
+    } 
+    else {
+      this.isApp = true;
+    }
   }
 
   scan() {
     this.barcodeScanner.scan().then(barcodeData => {
+      if(!barcodeData.cancelled){
         if(barcodeData.format == 'QR_CODE') {
-          let obj = JSON.parse(barcodeData.text);
-          this.getTavolo(obj.id);
+          if(this.isJson(barcodeData.text)){
+            let obj = JSON.parse(barcodeData.text);
+            if(obj.tag == "myBarTableToken"){
+              this.getTavolo(obj.id);
+            }
+            else {
+              this.presentAlert("Errore! \nil QRcode non è valido.", ['OK COLPA MIA']);              
+            }
+          }
+          else {
+            this.presentAlert("Errore! \nil QRcode non è valido.", ['OK COLPA MIA']);
+          }
         }
         else {
           this.presentAlert("Barcode non funzionante", ['OK COLPA MIA']);
         }
+      }
      }).catch(err => {
          console.log('Error', err);
      });
+  }
+
+  isJson(str) {
+    try {
+        JSON.parse(str);
+    } catch (e) {
+        return false;
+    }
+    return true;
   }
 
   presentAlert(_sub, _btns) {
@@ -42,7 +70,6 @@ export class HomePage {
 
   goto(){
     this.getTavolo(1);
-    this.navCtrl.push(MenuPage);
   }
 
   getTavolo(_scanned){//#1

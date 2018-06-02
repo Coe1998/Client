@@ -1,5 +1,5 @@
 <ion-header>
-    <ion-navbar>
+    <ion-navbar color="dark">
         <ion-buttons left>
             <button ion-button icon-only (click)="this.closeModal()">
                 <ion-icon name="arrow-back"></ion-icon>
@@ -15,10 +15,14 @@
   </ion-header>
   <ion-content padding>
       <ion-row>
-          <ion-col col-3>
+          <ion-col col-4>
               <ion-icon name="remove-circle" (click)="decrement(1)"></ion-icon>
-              {{ this.qta }}
-              <ion-icon name="add-circle" (click)="increment(1)"></ion-icon>
+          </ion-col>
+          <ion-col col-4>
+            {{ this.qta }}
+          </ion-col>
+          <ion-col col-4>
+            <ion-icon name="add-circle" (click)="increment(1)"></ion-icon>              
           </ion-col>
       </ion-row>
   </ion-content>

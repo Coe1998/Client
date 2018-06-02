@@ -4,6 +4,7 @@ import { IonicPage, NavController, NavParams, ModalController, AlertController }
 
 import { SelectoptionsPage } from './../selectoptions/selectoptions';
 import { RiepilogoPage } from '../riepilogo/riepilogo';
+import { HomePage } from '../home/home';
 
 import { Service } from './../../providers/service';
 
@@ -13,18 +14,24 @@ import { Service } from './../../providers/service';
   templateUrl: 'menu.html',
 })
 export class MenuPage {
-  public prodotti: Prodotti[]= new Array<Prodotti>();
-  public categorie: Categorie[] = new Array<Categorie>();
+  public prodotti: Prodotti[];
+  public categorie: Categorie[]
   public hasOptList: any;
+  public ctrl: boolean;
   
   constructor(public navCtrl: NavController, public navParams: NavParams, public modalCtrl: ModalController, public service: Service, public alertCtrl: AlertController) {
-    this.retrieve_categorie();
-    this.retrieve_prodotti(1);
-    this.retrieve_hasOpt();
+    this.prodotti = new Array<Prodotti>();
+    this.categorie = new Array<Categorie>();
+    this.ctrl = true;
   }
 
   ionViewDidLoad() {
-    //console.log('ionViewDidLoad MenuPage');
+    if(this.ctrl) {
+      this.retrieve_categorie();
+      this.retrieve_prodotti(1);
+      this.retrieve_hasOpt();
+      this.ctrl = false;
+    }
   }
 
   retrieve_hasOpt(){
@@ -73,16 +80,6 @@ export class MenuPage {
     if(this.esistonoOpzioni(item.id))
       this.modalCtrl.create(SelectoptionsPage, {"prodotto" : item}).present();
     else 
-      /*
-			this.service.ordina(item.id, []).subscribe(
-        (data : any) => {
-          this.presentAlert();
-        },
-        (error : any) => {
-          console.dir(error);
-        }
-      );
-      */
      this.modalCtrl.create(SelectQtaPage, {"prodotto" : item}).present();
   }
 
@@ -90,11 +87,11 @@ export class MenuPage {
     this.navCtrl.push(RiepilogoPage);
   }
 
-  presentAlert() {
+  presentAlert(_subT, _btns) {
     let alert = this.alertCtrl.create({
       title: '',
-      subTitle: 'Prodotto inserito nell\'ordine' ,
-      buttons: ['OK']
+      subTitle: _subT ,
+      buttons: _btns
     });
     alert.present();
   }
@@ -108,6 +105,25 @@ export class MenuPage {
     });
     return esito;
   }
+
+  backHomePage(){
+    let buttons: any = [
+      {
+        text: 'Indietro',
+        handler: () => {
+          this.navCtrl.popToRoot();
+        }
+      },
+      {
+        text: 'Resta',
+        role: 'cancel',
+        handler: () => {
+        }
+      }
+    ];
+    this.presentAlert("Sei sicuro di voler tornare indietro? l'ordine che stai facendo verrà eliminato", buttons);
+  }
+
 }
 
 

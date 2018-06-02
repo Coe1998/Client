@@ -1,3 +1,4 @@
+<!--
 <ion-header>
   <ion-navbar>
     <ion-title>
@@ -5,10 +6,22 @@
     </ion-title>
   </ion-navbar>
 </ion-header>
-
 <ion-content padding>
   <ion-buttons start>
     <button ion-button ><ion-icon name="qr-scanner" (click)="scan()"></ion-icon></button>
     <button ion-button><ion-icon name="american-football" (click)="goto()"></ion-icon></button>    
   </ion-buttons>
+</ion-content>
+-->
+<ion-content padding>
+  <ion-row>
+    <ion-col offset-1></ion-col>
+    <ion-col col-9>
+      <ion-buttons start>
+          <button ion-button class="btn"><ion-icon name="qr-scanner" (click)="scan()"></ion-icon></button>
+          <button *ngIf="!this.isApp" ion-button class="test"><ion-icon name="american-football" (click)="goto()"></ion-icon></button>    
+      </ion-buttons>
+    </ion-col>
+    <ion-col offset-1></ion-col>
+  </ion-row>
 </ion-content>

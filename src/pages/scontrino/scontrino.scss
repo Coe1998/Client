@@ -1,0 +1,19 @@
+page-scontrino {
+    .back-button {
+        display: none !important;
+    }
+    .row-tot {
+        /*
+        position: fixed;
+        bottom:0;
+        */
+        border-top: 2px, dotted, #000;
+    }
+    ion-row {
+        ion-col{
+            button {
+                margin: unset !important;
+            }
+        }
+    }
+}

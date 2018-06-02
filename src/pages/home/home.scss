@@ -1,3 +1,23 @@
 page-home {
-
+    ion-content {
+        background-image: url("http://mybar201718.altervista.org/imgs/util/wallpaper.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+    ion-row{
+        margin-top: 24vh;
+        ion-col {
+            text-align: center;
+            .btn {
+                background-color: transparent;
+                font-size: 12vh;
+                opacity: 0.5;
+                border: 2px solid #fff;
+                border-radius: 5vh;
+            }
+            .activated {
+                background-color: transparent !important;
+            }
+        }
+    }
 }

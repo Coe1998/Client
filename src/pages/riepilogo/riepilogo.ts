@@ -1,3 +1,4 @@
+import { ScontrinoPage } from './../scontrino/scontrino';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 
@@ -13,6 +14,27 @@ export class RiepilogoPage {
   public totaleOrdine: number = 0;
   constructor(public navCtrl: NavController, public navParams: NavParams, public service: Service, public alertCtrl: AlertController) {
       this.retrieve_righe_ordine();
+      let interval = setInterval(() => {
+        service.getStatus().subscribe(
+          (data :any) => {
+            console.log('stato ', JSON.parse(data._body).statoOrd);
+            if(JSON.parse(data._body).statoOrd == "ELABORAZIONE"){
+              this.presentAlert("L'ordine è in elaborazione, non potrai più modificarlo.", [
+                {
+                  text: 'OK',
+                    handler: () => {
+                      this.navCtrl.push(ScontrinoPage);
+                    }
+                }
+              ]);
+              clearInterval(interval);
+            }
+          }, 
+          (error :any) => {
+            console.log(error);
+          }
+        );
+      }, 10000);
   }
 
   ionViewDidLoad() {
@@ -61,40 +83,42 @@ export class RiepilogoPage {
     );
   }
 
-  presentAlert(_sub, _btns) {
+  presentAlert(_text, _btns) {
     let alert = this.alertCtrl.create({
       title: '',
-      subTitle: _sub ,
+      subTitle: _text ,
       buttons: _btns
     });
     alert.present();
   }
   
   confermaOrdine() {
+    if(this.ordine.length > 0){
       let buttons: any = [
-      {
-        text: 'Annulla',
-        role: 'cancel',
-        handler: () => {
+        {
+          text: 'Annulla',
+          role: 'cancel',
+          handler: () => {
+          }
+        },
+        {
+          text: 'Conferma',
+          handler: () => {
+            console.log('Ordine confermato');
+            this.service.confermaOrdine().subscribe(
+              (data: any) => {
+                console.log(data);
+                this.presentAlert(JSON.parse(data._body).message, ['OK']);
+              },
+              (error: any) => {
+                console.log(error);
+              }
+            );
+          }
         }
-      },
-      {
-        text: 'Conferma',
-        handler: () => {
-          console.log('Ordine confermato');
-          this.service.confermaOrdine().subscribe(
-            (data: any) => {
-              console.log(data);
-              this.presentAlert(JSON.parse(data._body).message, ['OK']);
-            },
-            (error: any) => {
-              console.log(error);
-            }
-          );
-        }
-      }
-    ];
-    this.presentAlert('Confermare l\'ordine ?', buttons);
+      ];
+      this.presentAlert('Confermare l\'ordine ?', buttons);
+    }
   }
   
   getTotale() {
@@ -107,15 +131,6 @@ export class RiepilogoPage {
         console.log(error);
       }
     );
-  }
-
-  cur(a) {
-    let b: string = a.toString();
-    if(b[0] == '0'){
-      return b.substring(2, b.length) + " €";
-    }
-    else 
-      return b + " €";
   }
 
 }

@@ -184,6 +184,17 @@ export class Service {
         return this.http.post(url, JSON.stringify(options), headers);
     }
 
+    public getStatus() {
+        let headers:any = new HttpHeaders({ 'Content-Type': 'application/json' }),
+        options:any	= {
+            "key" : "retrieve-status", 
+            "id-testata": this.idTestata,
+        },
+        url: any = this.baseURI;
+
+        return this.http.post(url, JSON.stringify(options), headers);
+    }
+
     /*
      *  ordina
      *  > dalla pagina menu il parametro _opts resta a null

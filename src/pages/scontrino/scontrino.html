@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-navbar color="dark">
+  <ion-title>Scontrino</ion-title>
+</ion-navbar>
+</ion-header>
+<ion-content padding>
+<ion-row *ngFor="let item of ordine;let i = index">
+  <ion-col col-12>
+      <label> {{ item.descrizione }} - {{ item.prezzo }} € x {{ item.qta }} = {{ item.subtot }} €</label>
+  </ion-col>
+</ion-row>
+<ion-row class="row-tot"> 
+  <ion-label> TOTALE:  {{ this.totaleOrdine }} €</ion-label>
+</ion-row>
+
+</ion-content>
